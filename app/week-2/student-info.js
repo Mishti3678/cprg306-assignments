@@ -10,7 +10,7 @@ export default function StudentInfo() {
           rel="noopener noreferrer"
           style={{ color: 'white', textDecoration: 'underline' }}
         >
-          Mishti3678/CPRG306_assignments
+          Mishti3678/cprg306-assignments
         </Link>
       </h1>
     </div>
