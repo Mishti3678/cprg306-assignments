@@ -1,6 +1,6 @@
 /*create a functional component named ItemList. Inside this component, copy paste the following item objects each with name, 
 quantity, and category properties. Render these items using the Item component you just created, passing item data as props*/
-import Item from "./item";
+import Item from "../week-3/item";
 import React from 'react';
 import Link from "next/link";
 export default function ItemList() {

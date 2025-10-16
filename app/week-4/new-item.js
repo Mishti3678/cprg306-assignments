@@ -15,7 +15,7 @@ export default function NewItem() {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md w-[450px]">
     <div className="flex flex-col items-start"></div>
-      <h1 className="text-lg text-sm text-gray-600  mb-4">Quantity:<span className="text-xl text-sm text-gray-100 font-bold">{quantity}</span></h1>
+      <h1 className="text-lg text-gray-600  mb-4">Quantity:<span className="text-xl  text-gray-100 font-bold">{quantity}</span></h1>
       <div className="flex items-left space-x-4 mb-4">
         <button onClick={decrement}
           className="px-4 py-2 bg-gray-200 text-white-900 rounded-lg hover:bg-gray-300"

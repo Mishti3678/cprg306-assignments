@@ -35,7 +35,7 @@ export default function NewItem() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="bg-white p-6 rounded-lg shadow-md w-[400px] required">
+      <div className="bg-white p-6 rounded-lg shadow-md w-[400px]">
         <label className="text- mb-1 ">Item Name</label>
         <input
           type="text"

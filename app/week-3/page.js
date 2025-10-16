@@ -2,7 +2,7 @@
 component. Use Tailwind classes for styling.*/
 import React from 'react';
 import Item from './item';
-import ItemList from './item-list';
+import ItemList from '../week-6/item-list';
 import Link from 'next/link';
 export const metadata = {
   title: 'Week 3 Assignment',
