@@ -1,26 +1,45 @@
-"use client";
+
+   "use client";
 
 import { useState } from "react";
 import ItemList from "./item-list";
 import NewItem from "./new-item";
-import itemsData from "./items.json"; // ✅ Make sure this line exists and is correct
-
+import MealIdeas from "./meal-ideas";
+import itemsData from "./items.json";
 
 export default function Page() {
-// Initialize a state variable (e.g., items) with the data from items.json.
   const [items, setItems] = useState(itemsData);
+  const [selectedItemName, setSelectedItemName] = useState("");
 
-// Create an event handler function (e.g., handleAddItem) that adds a new item to items.
+  // Add new items
   function handleAddItem(newItem) {
-    setItems(prev => [...prev, newItem]); // Add new item immutably
+    setItems((prev) => [...prev, newItem]);
+  }
+
+  // Handle item selection and clean the name
+  function handleItemSelect(item) {
+    const cleanedName = item.name
+      .split(",")[0] // remove size/quantity
+      .replace(/[^\p{L}\p{N}\s]/gu, "") // remove emoji/symbols
+      .trim()
+      .toLowerCase();
+
+    setSelectedItemName(cleanedName);
   }
 
   return (
-     <main className="p-6 max-w-xl mx-auto">
-      <h1 className=" text-3xl font-bold w-full max-w-md mx-auto mb-">Week 7  — Shopping List</h1>
-      <NewItem onAdd={handleAddItem} />
-      <ItemList items={items} />
+    <main className="p-6 flex flex-col md:flex-row gap-6">
+      {/* Left side: add + list */}
+      <div className="flex-1">
+        <h1 className="text-3xl font-bold mb-6 text-white">Week 8 — Shopping List</h1>
+        <NewItem onAddItem={handleAddItem} />
+        <ItemList items={items} onItemSelect={handleItemSelect} />
+      </div>
+
+      {/* Right side: meal ideas */}
+      <div className="flex-1">
+        <MealIdeas ingredient={selectedItemName} />
+      </div>
     </main>
   );
 }
-   
