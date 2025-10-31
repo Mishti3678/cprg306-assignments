@@ -31,7 +31,7 @@ export default function Page() {
     <main className="p-6 flex flex-col md:flex-row gap-6">
       {/* Left side: add + list */}
       <div className="flex-1">
-        <h1 className="text-3xl font-bold mb-6 text-white">Week 8 — Shopping List</h1>
+        <h1 className="text-3xl font-bold mb-6 text-white"> Shopping List + Meal Ideas</h1>
         <NewItem onAddItem={handleAddItem} />
         <ItemList items={items} onItemSelect={handleItemSelect} />
       </div>

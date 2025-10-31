@@ -34,10 +34,10 @@ export default function MealIdeas({ ingredient }) {
   return (
     <div className="p-4 w-full max-w-md mx-auto">
       <h2 className="text-xl font-semibold mb-4 text-white">
-        Meal Ideas {ingredient ? `for "${ingredient}"` : ""}
+        Meal ideas(select an item) {ingredient ? `for "${ingredient}"` : ""}
       </h2>
 
-      {!ingredient && <p className="text-gray-300">Select an item to view meal ideas.</p>}
+      {!ingredient && <p className="text-gray-300">Choose an item to see ideas.</p>}
 
       <ul className="space-y-3">
         {meals.map((meal) => (
