@@ -1,62 +1,53 @@
-
-   "use client";
-
+"use client";
 import { useState } from "react";
-import ItemList from "./item-list";
-import NewItem from "./new-item";
-import MealIdeas from "./meal-ideas";
-import itemsData from "./items.json";
+import { useUserAuth } from "../contexts/AuthContext";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-export default function Page() {
-  const [items, setItems] = useState(itemsData);
-  const [selectedItemName, setSelectedItemName] = useState("");
+export default function LoginPage() {
+  const { login } = useUserAuth();
+  const router = useRouter();
 
-  // Add new items
-  function handleAddItem(newItem) {
-    setItems((prev) => [...prev, newItem]);
-  }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  // Handle item selection and clean the name
-  function handleItemSelect(item) {
-    const cleanedName = item.name
-      .split(",")[0] // remove size/quantity
-      .replace(/[^\p{L}\p{N}\s]/gu, "") // remove emoji/symbols
-      .trim()
-      .toLowerCase();
-
-    setSelectedItemName(cleanedName);
-  }
+  const handleLogin = async () => {
+    try {
+      setError("");
+      await login(email, password);
+      router.push("/week-9/shopping-list");
+    } catch (err) {
+      setError("Invalid login. Please try again.");
+    }
+  };
 
   return (
-    <main className="p-6 flex flex-col md:flex-row gap-6">
-      {/* Left side: add + list */}
-      <div className="flex-1">
-        <h1 className="text-3xl font-bold mb-6 text-white"> Shopping List + Meal Ideas</h1>
-        <NewItem onAddItem={handleAddItem} />
-        <ItemList items={items} onItemSelect={handleItemSelect} />
-      </div>
+    <div style={{ padding: 20 }}>
+      <h1>Login</h1>
 
-      {/* Right side: meal ideas */}
-      <div className="flex-1">
-        <MealIdeas ingredient={selectedItemName} />
-      </div>
-    </main>
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <br /><br />
+
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <br /><br />
+
+      <button onClick={handleLogin}>Login</button>
+      <br /><br />
+
+      <Link href="/week-10">Go to Week 10</Link>
+    </div>
   );
 }
-
-// Import the useUserAuth hook
-import { useUserAuth } from "../contexts/AuthContext";
- 
-// Use the useUserAuth hook to get the user object and the login and logout functions
-const { user, gitHubSignIn, firebaseSignOut } = useUserAuth();
- 
-// Sign in to Firebase with GitHub authentication
-await gitHubSignIn();
- 
-// Sign out of Firebase
-await firebaseSignOut();
- 
-// Display some of the user's information
-<p>
-  Welcome, {user.displayName} ({user.email})
-</p>;

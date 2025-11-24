@@ -1,34 +1,59 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { useUserAuth } from "../../contexts/AuthContext";
-import ShoppingList from "../../components/ShoppingList"; // adjust if your file name/path differs
 
-export default function ShoppingListPage() {
+import ItemList from "./item-list";
+import NewItem from "./new-item";
+import MealIdeas from "./meal-ideas";
+import itemsData from "./items.json";
+import { useRouter } from "next/navigation";
+
+export default function Page() {
+  const [items, setItems] = useState(itemsData);
+  const [selectedItemName, setSelectedItemName] = useState("");
   const { user } = useUserAuth();
   const router = useRouter();
 
-  // Redirect to login page if not authenticated
   useEffect(() => {
     if (!user) {
-      router.push("/week-9"); // landing page path
+      router.push("/week-9");
     }
   }, [user, router]);
 
-  // If user not loaded yet or redirecting
   if (!user) {
-    return (
-      <div className="flex items-center justify-center h-screen text-xl">
-        Redirecting to login...
-      </div>
-    );
+    return null;
+  }
+
+  function handleAddItem(newItem) {
+    setItems((prev) => [...prev, newItem]);
+  }
+
+  function handleItemSelect(item) {
+    const cleanedName = item.name
+      .split(",")[0]
+      .replace(/[^\p{L}\p{N}\s]/gu, "")
+      .trim()
+      .toLowerCase();
+
+    setSelectedItemName(cleanedName);
   }
 
   return (
-    <main className="p-8 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold mb-6">Your Shopping List</h1>
-      <ShoppingList />
+    <main className="mx-50 p-4 dark:text-gray-100">
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <div className="flex-1">
+          <h1 className="text-2xl font-bold text-gray-800"> Shopping List + Meal Ideas</h1>
+          <NewItem onAddItem={handleAddItem} />
+          <ItemList items={items} onItemSelect={handleItemSelect} />
+        </div>
+
+        <div>
+          <MealIdeas ingredient={selectedItemName} />
+        </div>
+      </div>
     </main>
+
   );
 }
